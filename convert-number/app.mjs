@@ -1,5 +1,5 @@
-const sevenLetterWordDictionary = await import('./sevenLetterWordDictionary.mjs');
-const fourLetterWordDictionary = await import('./fourLetterWordDictionary.mjs');
+import { sevenLetterWordDictionary } from './sevenLetterWordDictionary.mjs';
+import { fourLetterWordDictionary } from './fourLetterWordDictionary.mjs';
 
 const keypadObj = {
     2: 'abc',
@@ -63,13 +63,13 @@ function getSevenDigitVanity (phoneNumber) { // gets a vanity code for a seven-d
                       for (let n = 0; n < possibleSixth.length; n++) {
                           for (let o = 0; o < possibleSeventh.length; o++) {
                             const sevenWord = possibleFirst[i] + possibleSecond[j] + possibleThird[k] + possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
-                            if (sevenLetterWordDictionary.default.includes(sevenWord) && !realSevenWords.includes(sevenWord)) {
+                            if (sevenLetterWordDictionary.includes(sevenWord) && !realSevenWords.includes(sevenWord)) {
                                 realSevenWords.push(sevenWord);
                             } else if (jargonSevenWords.length < 5) {
                                 jargonSevenWords.push(sevenWord)
                             }
                             const fourWord = possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
-                            if (fourLetterWordDictionary.default.includes(fourWord.toUpperCase()) && !realFourWords.includes(fourWord)) {
+                            if (fourLetterWordDictionary.includes(fourWord.toUpperCase()) && !realFourWords.includes(fourWord)) {
                                 realFourWords.push(fourWord);
                             } else if (jargonFourWords.length < 5) {
                                 jargonFourWords.push(fourWord)

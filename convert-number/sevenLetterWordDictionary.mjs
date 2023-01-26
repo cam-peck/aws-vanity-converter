@@ -499,4 +499,4 @@ const sevenLetterWordDictionary = ["ability",
 "writing",
 "written"];
 
-export default sevenLetterWordDictionary;
+export { sevenLetterWordDictionary };
