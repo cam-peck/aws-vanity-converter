@@ -16,4 +16,9 @@ export const lambdaHandler = (event, context, callback) => {
 
 // TODO:
     // 1: Work on DynamoDB integration
+        // Read DynamoDB documentation on AWS Site
+        // Figure out how to initialize a db from template.yaml
+        // Add code for GET requests from the database
+        // Add code for POST requests to the database
+        // Add tests for DynamoDB --> AWS.mock()???
     // 2: Lots more unit tests for convert-number functions
