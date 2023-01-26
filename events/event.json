@@ -5,7 +5,7 @@
           "Channel": "VOICE",
           "ContactId": "4a573372-1f28-4e26-b97b-XXXXXXXXXXX",
           "CustomerEndpoint": {
-              "Address": "+1234567890",
+              "Address": "+13174877448",
               "Type": "TELEPHONE_NUMBER"
           },
           "InitialContactId": "4a573372-1f28-4e26-b97b-XXXXXXXXXXX",
@@ -17,7 +17,7 @@
              "Name": "PasswordReset"
            },
           "SystemEndpoint": {
-              "Address": "+1234567890",
+              "Address": "+13174877448",
               "Type": "TELEPHONE_NUMBER"
           }
       },

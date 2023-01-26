@@ -1,13 +1,13 @@
 'use strict';
-import { confirmPhoneNumber } from '../../confirm-phone-number.mjs';
+import { generateVanityNumbers } from '../../generate-vanity-numbers.mjs';
 import { lambdaHandler } from '../../app.mjs';
 import { expect } from 'chai';
 var event, context;
 
-describe('Phone Number Tests', function () {
+describe('Vanity Number Tests', function () {
     it('responds with four arrays', async () => {
         const number1 = "+13179486377"; // witness
-        const result = confirmPhoneNumber(number1)
+        const result = generateVanityNumbers(number1)
 
         expect(result).to.be.an('object');
         expect(result.realFourWords).to.be.an('array');
@@ -23,11 +23,11 @@ describe('Phone Number Tests', function () {
         const jargon1 = "+13174462234";
         const jargon2 = "+13179934569";
 
-        const displayResult = confirmPhoneNumber(display)
-        const improveResult = confirmPhoneNumber(improve)
-        const paymentResult = confirmPhoneNumber(payment)
-        const jargon1Result = confirmPhoneNumber(jargon1)
-        const jargon2Result = confirmPhoneNumber(jargon2)
+        const displayResult = generateVanityNumbers(display)
+        const improveResult = generateVanityNumbers(improve)
+        const paymentResult = generateVanityNumbers(payment)
+        const jargon1Result = generateVanityNumbers(jargon1)
+        const jargon2Result = generateVanityNumbers(jargon2)
 
         expect(displayResult.jargonFourWords).to.have.length(5);
         expect(displayResult.jargonSevenWords).to.have.length(5);
@@ -47,10 +47,10 @@ describe('Phone Number Tests', function () {
         const payment = "+13177296368";
         const success = "+13177822377";
 
-        const displayResult = confirmPhoneNumber(display)
-        const improveResult = confirmPhoneNumber(improve)
-        const paymentResult = confirmPhoneNumber(payment)
-        const successResult = confirmPhoneNumber(success)
+        const displayResult = generateVanityNumbers(display)
+        const improveResult = generateVanityNumbers(improve)
+        const paymentResult = generateVanityNumbers(payment)
+        const successResult = generateVanityNumbers(success)
 
         expect(displayResult.realSevenWords).to.include('display');
         expect(improveResult.realSevenWords).to.include('improve');
@@ -63,10 +63,10 @@ describe('Phone Number Tests', function () {
         const good = "+13174674663";
         const kick = "+13177295425";
         const nice = "+13177826423";
-        const bestResult = confirmPhoneNumber(best)
-        const goodResult = confirmPhoneNumber(good)
-        const kickResult = confirmPhoneNumber(kick)
-        const niceResult = confirmPhoneNumber(nice)
+        const bestResult = generateVanityNumbers(best)
+        const goodResult = generateVanityNumbers(good)
+        const kickResult = generateVanityNumbers(kick)
+        const niceResult = generateVanityNumbers(nice)
 
         expect(bestResult.realFourWords).to.include('best');
         expect(goodResult.realFourWords).to.include('good');

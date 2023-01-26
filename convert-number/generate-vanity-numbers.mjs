@@ -1,4 +1,5 @@
-import { checkDictionary } from './check-dictionary.mjs'
+import { checkDictionary } from './check-dictionary.mjs';
+import { formatPhoneNumber } from './format-phone-number.mjs';
 
 const keypadObj = {
     2: 'abc',
@@ -11,14 +12,18 @@ const keypadObj = {
     9: 'wxyz',
 };
 
-function generateVanityNumbers (phoneNumber, options) { // phoneNumber is 7 digits, options include valid number data as { check: { 4: t / f, 7: t / f } }
-    const possibleFirst = keypadObj[phoneNumber[0]];
-    const possibleSecond = keypadObj[phoneNumber[1]];
-    const possibleThird= keypadObj[phoneNumber[2]];
-    const possibleFourth = keypadObj[phoneNumber[3]];
-    const possibleFifth = keypadObj[phoneNumber[4]];
-    const possibleSixth = keypadObj[phoneNumber[5]];
-    const possibleSeventh = keypadObj[phoneNumber[6]];
+function generateVanityNumbers (phoneNumber) { 
+    const { sevenDigitNumber, check, Error } = formatPhoneNumber(phoneNumber); // check: { 4: t / f, 7: t / f } } where 4 and 7 represent valid 4 & 7 digit numbers
+    if (Error) {
+        return Error;
+    }
+    const possibleFirst = keypadObj[sevenDigitNumber[0]];
+    const possibleSecond = keypadObj[sevenDigitNumber[1]];
+    const possibleThird= keypadObj[sevenDigitNumber[2]];
+    const possibleFourth = keypadObj[sevenDigitNumber[3]];
+    const possibleFifth = keypadObj[sevenDigitNumber[4]];
+    const possibleSixth = keypadObj[sevenDigitNumber[5]];
+    const possibleSeventh = keypadObj[sevenDigitNumber[6]];
     
     const jargonSevenWords = [];
     const realSevenWords = [];
@@ -34,7 +39,7 @@ function generateVanityNumbers (phoneNumber, options) { // phoneNumber is 7 digi
                           for (let o = 0; o < possibleSeventh.length; o++) {
                             const curSevenLetterWord = possibleFirst[i] + possibleSecond[j] + possibleThird[k] + possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
                             const curFourLetterWord = possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
-                            if (options.check[4]) {
+                            if (check[4]) {
                                 if (checkDictionary(curFourLetterWord, 4) && !realFourWords.includes(curFourLetterWord)) {
                                     realFourWords.push(curFourLetterWord);
                                 } else {
@@ -43,7 +48,7 @@ function generateVanityNumbers (phoneNumber, options) { // phoneNumber is 7 digi
                                     }
                                 } 
                             }
-                            if (options.check[7]) {
+                            if (check[7]) {
                                 if (checkDictionary(curSevenLetterWord, 7) && !realSevenWords.includes(curSevenLetterWord)) {
                                     realSevenWords.push(curSevenLetterWord);
                                 } else {
