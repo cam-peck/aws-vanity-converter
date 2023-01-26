@@ -6,19 +6,19 @@ Description: >
   A lambda function / dynamoDB interface for converting phone numbers to vanity numbers.
   
 Resources:
-  HelloWorldFunction:
+  NumberToVanityFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: hello-world/
+      CodeUri: convert-number/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
       Architectures:
         - x86_64
 
 Outputs:
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  NumberToVanityFunction:
+    Description: "NumberToVanity Lambda Function ARN"
+    Value: !GetAtt NumberToVanityFunction.Arn
+  NumberToVanityFunctionIamRole:
+    Description: "Implicit IAM Role created for NumberToVanity function"
+    Value: !GetAtt NumberToVanityFunction.Arn
