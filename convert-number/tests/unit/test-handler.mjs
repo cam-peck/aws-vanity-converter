@@ -1,5 +1,5 @@
 'use strict';
-import { generateVanityNumbers } from '../../generate-vanity-numbers.mjs';
+import { generateVanityWords } from '../../generate-vanity-words.mjs';
 import { lambdaHandler } from '../../app.mjs';
 import { expect } from 'chai';
 var event, context;
@@ -7,7 +7,7 @@ var event, context;
 describe('Vanity Number Tests', function () {
     it('responds with four arrays', async () => {
         const number1 = "+13179486377"; // witness
-        const result = generateVanityNumbers(number1)
+        const result = generateVanityWords(number1)
 
         expect(result).to.be.an('object');
         expect(result.realFourWords).to.be.an('array');
@@ -23,11 +23,11 @@ describe('Vanity Number Tests', function () {
         const jargon1 = "+13174462234";
         const jargon2 = "+13179934569";
 
-        const displayResult = generateVanityNumbers(display)
-        const improveResult = generateVanityNumbers(improve)
-        const paymentResult = generateVanityNumbers(payment)
-        const jargon1Result = generateVanityNumbers(jargon1)
-        const jargon2Result = generateVanityNumbers(jargon2)
+        const displayResult = generateVanityWords(display)
+        const improveResult = generateVanityWords(improve)
+        const paymentResult = generateVanityWords(payment)
+        const jargon1Result = generateVanityWords(jargon1)
+        const jargon2Result = generateVanityWords(jargon2)
 
         expect(displayResult.jargonFourWords).to.have.length(5);
         expect(displayResult.jargonSevenWords).to.have.length(5);
@@ -47,10 +47,10 @@ describe('Vanity Number Tests', function () {
         const payment = "+13177296368";
         const success = "+13177822377";
 
-        const displayResult = generateVanityNumbers(display)
-        const improveResult = generateVanityNumbers(improve)
-        const paymentResult = generateVanityNumbers(payment)
-        const successResult = generateVanityNumbers(success)
+        const displayResult = generateVanityWords(display)
+        const improveResult = generateVanityWords(improve)
+        const paymentResult = generateVanityWords(payment)
+        const successResult = generateVanityWords(success)
 
         expect(displayResult.realSevenWords).to.include('display');
         expect(improveResult.realSevenWords).to.include('improve');
@@ -63,10 +63,10 @@ describe('Vanity Number Tests', function () {
         const good = "+13174674663";
         const kick = "+13177295425";
         const nice = "+13177826423";
-        const bestResult = generateVanityNumbers(best)
-        const goodResult = generateVanityNumbers(good)
-        const kickResult = generateVanityNumbers(kick)
-        const niceResult = generateVanityNumbers(nice)
+        const bestResult = generateVanityWords(best)
+        const goodResult = generateVanityWords(good)
+        const kickResult = generateVanityWords(kick)
+        const niceResult = generateVanityWords(nice)
 
         expect(bestResult.realFourWords).to.include('best');
         expect(goodResult.realFourWords).to.include('good');

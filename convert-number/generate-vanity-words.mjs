@@ -1,5 +1,5 @@
-import { checkDictionary } from './check-dictionary.mjs';
-import { formatPhoneNumber } from './format-phone-number.mjs';
+import { checkDictionary } from './lib/check-dictionary.mjs';
+import { formatPhoneNumber } from './lib/format-phone-number.mjs';
 
 const keypadObj = {
     2: 'abc',
@@ -12,7 +12,7 @@ const keypadObj = {
     9: 'wxyz',
 };
 
-function generateVanityNumbers (phoneNumber) { 
+function generateVanityWords (phoneNumber) { 
     const { sevenDigitNumber, check, Error } = formatPhoneNumber(phoneNumber); // check: { 4: t / f, 7: t / f } } where 4 and 7 represent valid 4 & 7 digit numbers
     if (Error) {
         return Error;
@@ -66,4 +66,4 @@ function generateVanityNumbers (phoneNumber) {
     return { realFourWords, realSevenWords, jargonFourWords, jargonSevenWords };
 }
 
-export { generateVanityNumbers }
+export { generateVanityWords }
