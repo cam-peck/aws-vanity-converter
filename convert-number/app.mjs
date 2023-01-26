@@ -19,6 +19,3 @@ export const lambdaHandler = (event, context, callback) => {
     // 2: LOTS of error handling. Current cases that need handled...
         // invalid number handling (not a US number or not long enough number)
         // no result found handling (4-letter word's number contains a 1 or 0)
-
-const sampleData = (generateVanityWords("+13179377584"))
-console.log(chooseBestVanity(sampleData, "+13179377584")) //anytime
