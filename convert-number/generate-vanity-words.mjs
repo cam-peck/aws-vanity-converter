@@ -13,10 +13,7 @@ const keypadObj = {
 };
 
 function generateVanityWords (phoneNumber) { 
-    const { sevenDigitNumber, check, Error } = formatPhoneNumber(phoneNumber); // check: { 4: t / f, 7: t / f } } where 4 and 7 represent valid 4 & 7 digit numbers
-    if (Error) {
-        return Error;
-    }
+    const { sevenDigitNumber, check } = formatPhoneNumber(phoneNumber); // check: { 4: t / f, 7: t / f } } where 4 and 7 represent valid 4 & 7 digit numbers
     const possibleFirst = keypadObj[sevenDigitNumber[0]];
     const possibleSecond = keypadObj[sevenDigitNumber[1]];
     const possibleThird= keypadObj[sevenDigitNumber[2]];
