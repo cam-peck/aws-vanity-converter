@@ -1,5 +1,5 @@
-import { sevenLetterWordDictionary } from './sevenLetterWordDictionary.mjs';
-import { fourLetterWordDictionary } from './fourLetterWordDictionary.mjs';
+import { sevenLetterWordDictionary } from './seven-letter-word-dictionary.mjs';
+import { fourLetterWordDictionary } from './four-letter-word-dictionary.mjs';
 
 function checkDictionary (word, wordLength) { // gets a vanity code for three & four digit numbers
     switch (wordLength) {

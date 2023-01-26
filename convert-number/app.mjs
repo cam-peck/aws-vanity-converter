@@ -12,7 +12,3 @@ export const lambdaHandler = async (event, context, callback) => {
 
     callback(null, resultMap);
 };
-
-const number1 = "+13179486377"; // witness
-const result = confirmPhoneNumber(number1);
-console.log(result);

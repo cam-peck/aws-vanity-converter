@@ -1,20 +1,76 @@
 'use strict';
-
+import { confirmPhoneNumber } from '../../confirm-phone-number.mjs';
 import { lambdaHandler } from '../../app.mjs';
 import { expect } from 'chai';
 var event, context;
 
-describe('Tests index', function () {
-    it('verifies successful response', async () => {
-        const result = await lambdaHandler(event, context)
+describe('Phone Number Tests', function () {
+    it('responds with four arrays', async () => {
+        const number1 = "+13179486377"; // witness
+        const result = confirmPhoneNumber(number1)
 
         expect(result).to.be.an('object');
-        expect(result.statusCode).to.equal(200);
-        expect(result.body).to.be.an('string');
+        expect(result.realFourWords).to.be.an('array');
+        expect(result.realSevenWords).to.be.an('array');
+        expect(result.jargonFourWords).to.be.an('array');
+        expect(result.jargonSevenWords).to.be.an('array');
+    });
 
-        let response = JSON.parse(result.body);
+    it('responds with a 5-length jargon array', async () => {
+        const display = "+13173477529";
+        const improve = "+13174677683";
+        const payment = "+13177296368";
+        const jargon1 = "+13174462234";
+        const jargon2 = "+13179934569";
 
-        expect(response).to.be.an('object');
-        expect(response.message).to.be.equal("hello world");
+        const displayResult = confirmPhoneNumber(display)
+        const improveResult = confirmPhoneNumber(improve)
+        const paymentResult = confirmPhoneNumber(payment)
+        const jargon1Result = confirmPhoneNumber(jargon1)
+        const jargon2Result = confirmPhoneNumber(jargon2)
+
+        expect(displayResult.jargonFourWords).to.have.length(5);
+        expect(displayResult.jargonSevenWords).to.have.length(5);
+        expect(improveResult.jargonFourWords).to.have.length(5);
+        expect(improveResult.jargonSevenWords).to.have.length(5);
+        expect(paymentResult.jargonFourWords).to.have.length(5);
+        expect(paymentResult.jargonSevenWords).to.have.length(5);
+        expect(jargon1Result.jargonFourWords).to.have.length(5);
+        expect(jargon1Result.jargonSevenWords).to.have.length(5);
+        expect(jargon2Result.jargonFourWords).to.have.length(5);
+        expect(jargon2Result.jargonSevenWords).to.have.length(5);
+    });
+
+    it('responds with a 7-letter word when it exists in the dictionary', async () => {
+        const display = "+13173477529";
+        const improve = "+13174677683";
+        const payment = "+13177296368";
+        const success = "+13177822377";
+
+        const displayResult = confirmPhoneNumber(display)
+        const improveResult = confirmPhoneNumber(improve)
+        const paymentResult = confirmPhoneNumber(payment)
+        const successResult = confirmPhoneNumber(success)
+
+        expect(displayResult.realSevenWords).to.include('display');
+        expect(improveResult.realSevenWords).to.include('improve');
+        expect(paymentResult.realSevenWords).to.include('payment');
+        expect(successResult.realSevenWords).to.include('success');
+    });
+
+    it('responds with a 4-letter word when it exists in the dictionary', async () => {
+        const best = "+13173472378";
+        const good = "+13174674663";
+        const kick = "+13177295425";
+        const nice = "+13177826423";
+        const bestResult = confirmPhoneNumber(best)
+        const goodResult = confirmPhoneNumber(good)
+        const kickResult = confirmPhoneNumber(kick)
+        const niceResult = confirmPhoneNumber(nice)
+
+        expect(bestResult.realFourWords).to.include('best');
+        expect(goodResult.realFourWords).to.include('good');
+        expect(kickResult.realFourWords).to.include('kick');
+        expect(niceResult.realFourWords).to.include('nice');
     });
 });
