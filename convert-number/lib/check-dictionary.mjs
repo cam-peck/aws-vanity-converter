@@ -1,7 +1,8 @@
 import { sevenLetterWordDictionary } from './seven-letter-word-dictionary.mjs';
 import { fourLetterWordDictionary } from './four-letter-word-dictionary.mjs';
 
-function checkDictionary (word, wordLength) { // gets a vanity code for three & four digit numbers
+function checkDictionary (word, wordLength) {
+     // checks dictionary for valid 4 or 7 letter words //
     switch (wordLength) {
         case 4:
             if (fourLetterWordDictionary.includes(word.toUpperCase())) {
@@ -12,7 +13,7 @@ function checkDictionary (word, wordLength) { // gets a vanity code for three & 
                 return true;
             } return false;
         default:
-            return false; // invalid word length
+            return false;
     }
 }
 

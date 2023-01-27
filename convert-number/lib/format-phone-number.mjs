@@ -1,5 +1,5 @@
 function formatPhoneNumber (phoneNumber) {
-  if (phoneNumber.length !== 12 || phoneNumber.slice(0, 2) !== '+1') { // phone number is not valid
+  if (phoneNumber.length !== 12 || phoneNumber.slice(0, 2) !== '+1') { // phone number is not a valid US number //
     throw new Error('A vanity code could not be created for your phone number. Ensure your number does not contain a 1 or 0 in the last four digits and that you are using a valid US number.');
   }
   const sevenDigitNumber = phoneNumber.slice(5); // last 7 digits
