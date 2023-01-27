@@ -3,7 +3,7 @@ import { chooseBestVanity } from './choose-best-vanity.mjs'
 import { ddbAddVanityNumbers } from './lib/ddb/ddb-add-vanity-numbers.mjs'
 import { ddbLookupPhoneNumber } from "./lib/ddb/ddb-lookup-phone-number.mjs";
 
-export const lambdaHandler = async (event, callback) => {
+export const lambdaHandler = async (event, context, callback) => {
 
     const phoneNumber = event['Details']['ContactData']['CustomerEndpoint']['Address'];
 
