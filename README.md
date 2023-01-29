@@ -1,127 +1,73 @@
 # aws-vanity-converter
 
-This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
+A serverless project that uses AWS Lambda & AWS DynamoDB with Amazon Connect to generate, store, and send vanity phone numbers. 
 
-- hello-world - Code for the application's Lambda function.
-- events - Invocation events that you can use to invoke the function.
-- hello-world/tests - Unit tests for the application code. 
-- template.yaml - A template that defines the application's AWS resources.
+## Development
 
-The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
+### System Requirements
 
-If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.  
-The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through debugging experience for Lambda function code. See the following links to get started.
+- AWS CLI
+- SAM CLI
+- Node.js v14 or higher
+- Docker
+- npm
 
-* [CLion](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [GoLand](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [IntelliJ](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [WebStorm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [Rider](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [PhpStorm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [PyCharm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [RubyMine](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [DataGrip](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
-* [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
+### Getting Started
 
-## Deploy the sample application
+1. Clone the repository.
 
-The Serverless Application Model Command Line Interface (SAM CLI) is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
+```bash
+git clone https://github.com/cam-peck/aws-vanity-converter.git
+cd aws-vanity-converter
+```
 
-To use the SAM CLI, you need the following tools.
+2. Install all dependencies with npm.
 
-* SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-* Node.js - [Install Node.js 18](https://nodejs.org/en/), including the NPM package management tool.
-* Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
+```bash
+npm install
+```
 
-To build and deploy your application for the first time, run the following in your shell:
+3. Build the project via SAM.
 
 ```bash
 sam build
+```
+
+4. Deploy the project.
+
+```bash
 sam deploy --guided
 ```
 
-The first command will build the source of your application. The second command will package and deploy your application to AWS, with a series of prompts:
-
-* **Stack Name**: The name of the stack to deploy to CloudFormation. This should be unique to your account and region, and a good starting point would be something matching your project name.
-* **AWS Region**: The AWS region you want to deploy your app to.
-* **Confirm changes before deploy**: If set to yes, any change sets will be shown to you before execution for manual review. If set to no, the AWS SAM CLI will automatically deploy application changes.
-* **Allow SAM CLI IAM role creation**: Many AWS SAM templates, including this example, create AWS IAM roles required for the AWS Lambda function(s) included to access AWS services. By default, these are scoped down to minimum required permissions. To deploy an AWS CloudFormation stack which creates or modifies IAM roles, the `CAPABILITY_IAM` value for `capabilities` must be provided. If permission isn't provided through this prompt, to deploy this example you must explicitly pass `--capabilities CAPABILITY_IAM` to the `sam deploy` command.
-* **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
-
-You can find your API Gateway Endpoint URL in the output values displayed after deployment.
-
-## Use the SAM CLI to build and test locally
-
-Build your application with the `sam build` command.
+### Testing
+1. Unit tests are defined in `~/convert-number/tests` folder. To run tests while you are in `~/convert-number`...
 
 ```bash
-aws-vanity-converter$ sam build
+npm run test
 ```
 
-The SAM CLI installs dependencies defined in `hello-world/package.json`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
-
-Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
-
-Run functions locally and invoke them with the `sam local invoke` command.
+2. To run an Amazon Connect test event, either use the provided event in `~convert-number/events` or add your own `event.json` in the `events` folder. To run tests while you are in `~/aws-vanity-converter`...
 
 ```bash
-aws-vanity-converter$ sam local invoke HelloWorldFunction --event events/event.json
+sam local invoke NumberToVanityFunction -e events/event.json 
 ```
 
-The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
+### Cleanup
 
-```bash
-aws-vanity-converter$ sam local start-api
-aws-vanity-converter$ curl http://localhost:3000/
-```
-
-The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
-
-```yaml
-      Events:
-        HelloWorld:
-          Type: Api
-          Properties:
-            Path: /hello
-            Method: get
-```
-
-## Add a resource to your application
-The application template uses AWS Serverless Application Model (AWS SAM) to define application resources. AWS SAM is an extension of AWS CloudFormation with a simpler syntax for configuring common serverless application resources such as functions, triggers, and APIs. For resources not included in [the SAM specification](https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md), you can use standard [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) resource types.
-
-## Fetch, tail, and filter Lambda function logs
-
-To simplify troubleshooting, SAM CLI has a command called `sam logs`. `sam logs` lets you fetch logs generated by your deployed Lambda function from the command line. In addition to printing the logs on the terminal, this command has several nifty features to help you quickly find the bug.
-
-`NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
-
-```bash
-aws-vanity-converter$ sam logs -n HelloWorldFunction --stack-name aws-vanity-converter --tail
-```
-
-You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
-
-## Unit tests
-
-Tests are defined in the `hello-world/tests` folder in this project. Use NPM to install the [Mocha test framework](https://mochajs.org/) and run unit tests.
-
-```bash
-aws-vanity-converter$ cd hello-world
-hello-world$ npm install
-hello-world$ npm run test
-```
-
-## Cleanup
-
-To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
+1. To delete the sample application that you created, use the AWS CLI.
 
 ```bash
 aws cloudformation delete-stack --stack-name aws-vanity-converter
 ```
 
-## Resources
+## Writing and Documentation
 
-See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
+1. Record your reasons for implementing the solution the way you did, struggles you faced, and problems you overcame.
 
-Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
+One of the first (and probably the biggest) struggles I ran into was getting my repo setup & linked up with AWS. I skimmed through a few YouTube videos to get an idea for project setup, and noticed that most people used the AWS CLI in combination with either `AWS SAM` or the `serverless` npm package. I'm a big fan of "install the package and play around with it to decide if you like it", so I installed `serverless` to try out first. After an hour or so I had a repo up and running, but had little to no idea what was going on -- their video on setting up a project covered AWS CLI, AWS-sdk, DynamoDB, Lambda, and AWS APIs in 8 minutes. Great for getting a project rolling quickly -- not great for learning. I uninstalled `serverless`, and using a phenomenal LinkedIn course by Daniel Bloy along with the AWS documentation on SAM, slowly worked through setting up my project. The big lightbulb moment for me was understanding the purpose of the `template.yaml` file and CloudFormation. AWS' great documentation on the YAML file and AWS SAM was a lifesaver throughout both the setup & coding phases of the project.
+
+Next was coding up the Lambda Function. I broke the problem up into two large pieces --> 1. generate every possible letter combination for a given number & 2. choose the best vanity numbers from that combination list. Creating a "perfect" vanity-converter is a big task, so I did some research on vanity numbers to scope down the problem. Most numbers used either a 7-letter combination (1-800-MATTRESS & 1-800-GoFedEx) or a 3-4 combination (1-800-BUY-SELL & 1-800-FOR-HVAC), so I decided to focus on 7 & 4 letter words. 3-4 could happen if I had extra time at the end, but I didn't want to worry about word order, valid combinations, etc. With the planning done, the coding went pretty smoothly. If I had more time, I'd definitely try to tackle the 3-4 combination problem. I also wrote my unit tests for chooseBestVanity and generateVanityWords after completing the functions to "shortcut" coding up the functions. Definitely should write those up in advance... :-). 
+
+The final part of the project was integrating DynamoDB. I ran into another setup issue here on whether to use `aws-sdk(v2)` or `aws-sdk(v3)`. After finding out that v3 offered modular imports and had better `async / await` support, the decision was pretty easy. I only needed the DynamoDB portion and I love `async / await` so... I went with v3. Before coding everything up, I also did some research on noSQL databases since my previous experience was with `postgreSQL`. I learned a lot about scalability, structured vs unstructured data, and CAP/ACID. Ultimately though, the syntax for querying the database was similar to what I'd done with `postgreSQL`, so no big problems during coding there. I also added a `GET` route to check for already existing vanity numbers for a caller. I also ensured that the lambda function associated with the database only had `GET` and `PUT` (this not being `POST` did throw me for a loop~!) access via the AWS dashboard. With more time, I'd like to setup the `template.yaml` file to implement those permissions instead of doing it manually --> that'd make it a lot easier for someone to download and start using my project.
+
+With some more time, I'd definitely take a deeper look at my dictionary banks. The dictionaries are currently stored as arrays, which search in O(n) whereas an object would search in O(1) (yay hash-maps!). I'd also like to expand the size of both dictionaries, but I didn't find a great npm package for this beyond `an-array-of-english-words`, which contains words of all letters and is also an array. I also need to add more unit tests, but I think I'll have time to do that before turning in the project Tuesday night. In production, would definitely want to write those tests first instead of after... :-). Great learning project -- thanks!
