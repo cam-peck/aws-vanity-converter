@@ -39,6 +39,44 @@ sam build
 sam deploy --guided
 ```
 
+### Permissions
+
+AWS uses the IAM to determine access priviledges across all AWS Services. You'll need to add a permission for the lambda function to access the DynamoDB table. 
+
+1. Sign into the AWS console, navigate to the IAM page, and create a policy with the below JSON data. Make sure to add the ARN for your lambda function under `Resource:`.
+
+```
+{
+
+    "Version": "2012-10-17",
+
+    "Statement": [
+
+        {
+
+            "Sid": "VisualEditor0",
+
+            "Effect": "Allow",
+
+            "Action": [
+
+                "dynamodb:PutItem",
+
+                "dynamodb:GetItem"
+
+            ],
+
+            "Resource": <add the ARN for your lambda function here>
+
+        }
+
+    ]
+
+}
+```
+
+2. Ensure you attach the policy to the current project via the `roles` tab.
+
 ### Testing
 1. Unit tests are defined in `~/convert-number/tests` folder. To run tests while you are in `~/convert-number`...
 
@@ -61,8 +99,6 @@ aws cloudformation delete-stack --stack-name aws-vanity-converter
 ```
 
 ## Writing and Documentation
-
-1. Record your reasons for implementing the solution the way you did, struggles you faced, and problems you overcame.
 
 One of the first (and probably the biggest) struggles I ran into was getting my repo setup & linked up with AWS. I skimmed through a few YouTube videos to get an idea for project setup, and noticed that most people used the AWS CLI in combination with either `AWS SAM` or the `serverless` npm package. I'm a big fan of "install the package and play around with it to decide if you like it", so I installed `serverless` to try out first. After an hour or so I had a repo up and running, but had little to no idea what was going on -- their video on setting up a project covered AWS CLI, AWS-sdk, DynamoDB, Lambda, and AWS APIs in 8 minutes. Great for getting a project rolling quickly -- not great for learning. I uninstalled `serverless`, and using a phenomenal LinkedIn course by Daniel Bloy along with the AWS documentation on SAM, slowly worked through setting up my project. The big lightbulb moment for me was understanding the purpose of the `template.yaml` file and CloudFormation. AWS' great documentation on the YAML file and AWS SAM was a lifesaver throughout both the setup & coding phases of the project.
 
