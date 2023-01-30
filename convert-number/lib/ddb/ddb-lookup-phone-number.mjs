@@ -7,9 +7,9 @@ async function ddbLookupPhoneNumber(numberToLookup) {
         Key: {
             phoneNumber: { S: numberToLookup }
         }
-    }
+    };
     try {
-        const data = await ddbClient.send(new GetItemCommand(params))
+        const data = await ddbClient.send(new GetItemCommand(params));
         if (data) return data.Item;
     } catch (err) {
         console.error(err);

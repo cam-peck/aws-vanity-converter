@@ -14,9 +14,10 @@
     "lint": "eslint --ext .mjs --ignore-path .gitignore ."
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "chai": "^4.3.6",
     "eslint": "^8.33.0",
-    "@babel/eslint-parser": "^7.19.1",
     "mocha": "^10.1.0"
   }
 }

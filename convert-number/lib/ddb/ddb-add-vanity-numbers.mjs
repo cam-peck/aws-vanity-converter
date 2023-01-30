@@ -10,13 +10,13 @@ async function ddbAddVanityNumbers(phoneNumber, vanityNumbers) { // vanityNumber
             vanityNumber2: { S: vanityNumbers[1]},
             vanityNumber3: { S: vanityNumbers[2]},
         }
-    }
+    };
     try {
-        const data = await ddbClient.send(new PutItemCommand(params))
+        const data = await ddbClient.send(new PutItemCommand(params));
         return data;
     } catch (err) {
         console.error(err);
     }
-}
+};
 
 export { ddbAddVanityNumbers };
