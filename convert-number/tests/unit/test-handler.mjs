@@ -2,12 +2,16 @@
 import { generateVanityWords } from '../../generate-vanity-words.mjs';
 import { chooseBestVanity } from '../../choose-best-vanity.mjs';
 import { lambdaHandler } from '../../app.mjs';
+import { ddbClient } from "../../lib/ddb/ddb-client.mjs";
+import { ddbAddVanityNumbers } from '../../lib/ddb/ddb-add-vanity-numbers.mjs'
+import { ddbLookupPhoneNumber } from "../../lib/ddb/ddb-lookup-phone-number.mjs";
+import { mockClient } from 'aws-sdk-client-mock';
+import { GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb'
 import { expect } from 'chai';
 import validEvent from '../../../events/valid-event.json' assert { type: 'json' };
 import invalidEvent from '../../../events/invalid-event.json' assert { type: 'json' };
-const context = {};
 
-console.log(lambdaHandler)
+const context = {};
 
 describe('Vanity Number Tests', function () {
     it('responds with four arrays', async () => {
@@ -168,4 +172,36 @@ describe('Lambda Handler Tests', function () {
         expect(vanityNumber2).to.have.length(10);
         expect(vanityNumber3).to.have.length(10);
     });
+});
+
+describe('DyanmoDB tests', function () {
+    const dynamoDBMock = mockClient(ddbClient);
+    describe('DyanmoDB PUT / POST Tests', function () {
+        it('adds valid numbers to the database', async () => {
+            dynamoDBMock
+                .on(GetItemCommand, {
+                    TableName: 'VanityNumbers',
+                    Key: {
+                        phoneNumber: { S: "+13172698463" }
+                    }
+                })
+                .resolves({
+                    phoneNumber: { S: '+13172698463' },
+                    vanityNumber3: { S: '317269tine' },
+                    vanityNumber1: { S: '317anytime' },
+                    vanityNumber2: { S: '317269time' }
+                });
+            
+            const result = await ddbLookupPhoneNumber("+13172698463");
+        });
+    
+    });
+
+    describe('DyanmoDB GET Tests', function () {
+        it('adds valid numbers to the database', async () => {
+        
+        });
+    
+    });
+    
 });

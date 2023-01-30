@@ -13,7 +13,6 @@ async function ddbAddVanityNumbers(phoneNumber, vanityNumbers) { // vanityNumber
     }
     try {
         const data = await ddbClient.send(new PutItemCommand(params))
-        console.log(data);
         return data;
     } catch (err) {
         console.error(err);

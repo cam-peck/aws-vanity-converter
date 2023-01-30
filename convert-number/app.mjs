@@ -31,8 +31,3 @@ export const lambdaHandler = async (event, context) => {
         return { result: false };
     }
 };
-
-// TODO:
-    // 1: LOTS of unit tests
-        // All dynamo functions need unit tests --> check out 'aws-sdk-client-mock' npm package
-    // 2: Swap dictionary data from an array to an object (or find better dictionaries) to improve runtime when looking up words
