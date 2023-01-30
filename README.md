@@ -66,7 +66,7 @@ AWS uses the IAM to determine access priviledges across all AWS Services. You'll
 
             ],
 
-            "Resource": <add the ARN for your lambda function here>
+            "Resource": <add the ARN for your DyamoDB table here>
 
         }
 
