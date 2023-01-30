@@ -5,11 +5,11 @@ function checkDictionary (word, wordLength) {
     // checks dictionary for valid 4 or 7 letter words //
     switch (wordLength) {
     case 4:
-        if (fourLetterWordDictionary.includes(word.toUpperCase())) {
+        if (fourLetterWordDictionary[word.toUpperCase()]) {
             return true;
         } return false;
     case 7:
-        if (sevenLetterWordDictionary.includes(word.toLowerCase())) {
+        if (sevenLetterWordDictionary[word.toLowerCase()]) {
             return true;
         } return false;
     default:
