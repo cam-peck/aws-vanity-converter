@@ -10,8 +10,10 @@
     "@aws-sdk/client-dynamodb": "^3.259.0"
   },
   "scripts": {
-    "test": "mocha ./convert-number/tests/unit/",
-    "lint": "eslint --ext .mjs --ignore-path .gitignore ."
+    "test": "mocha tests/unit/",
+    "build": "sam build",
+    "deploy": "sam deploy",
+    "deploy -g": "sam deploy --guided"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

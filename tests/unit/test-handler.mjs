@@ -1,10 +1,10 @@
 'use strict';
-import { generateVanityWords } from '../../generate-vanity-words.mjs';
-import { chooseBestVanity } from '../../choose-best-vanity.mjs';
-import { lambdaHandler } from '../../app.mjs';
+import { generateVanityWords } from '../../convert-number/generate-vanity-words.mjs';
+import { chooseBestVanity } from '../../convert-number/choose-best-vanity.mjs';
+import { lambdaHandler } from '../../convert-number/app.mjs';
 import { expect } from 'chai';
-import validEvent from '../../../events/valid-event.json' assert { type: 'json' };
-import invalidEvent from '../../../events/invalid-event.json' assert { type: 'json' };
+import validEvent from '../../events/valid-event.json' assert { type: 'json' };
+import invalidEvent from '../../events/invalid-event.json' assert { type: 'json' };
 
 const context = {};
 
