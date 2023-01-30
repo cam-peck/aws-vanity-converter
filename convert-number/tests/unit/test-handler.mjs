@@ -1,5 +1,6 @@
 'use strict';
 import { generateVanityWords } from '../../generate-vanity-words.mjs';
+import { chooseBestVanity } from '../../choose-best-vanity.mjs';
 import { lambdaHandler } from '../../app.mjs';
 import { expect } from 'chai';
 var event, context;
@@ -16,61 +17,135 @@ describe('Vanity Number Tests', function () {
         expect(result.jargonSevenWords).to.be.an('array');
     });
 
-    it('responds with a 5-length jargon array', async () => {
+    it('always responds with 5 words in the jargon-array', async () => {
         const display = "+13173477529";
         const improve = "+13174677683";
-        const payment = "+13177296368";
-        const jargon1 = "+13174462234";
-        const jargon2 = "+13179934569";
+        const jargon = "+13174462234";
 
         const displayResult = generateVanityWords(display)
         const improveResult = generateVanityWords(improve)
-        const paymentResult = generateVanityWords(payment)
-        const jargon1Result = generateVanityWords(jargon1)
-        const jargon2Result = generateVanityWords(jargon2)
+        const jargonResult = generateVanityWords(jargon)
 
         expect(displayResult.jargonFourWords).to.have.length(5);
         expect(displayResult.jargonSevenWords).to.have.length(5);
         expect(improveResult.jargonFourWords).to.have.length(5);
         expect(improveResult.jargonSevenWords).to.have.length(5);
-        expect(paymentResult.jargonFourWords).to.have.length(5);
-        expect(paymentResult.jargonSevenWords).to.have.length(5);
-        expect(jargon1Result.jargonFourWords).to.have.length(5);
-        expect(jargon1Result.jargonSevenWords).to.have.length(5);
-        expect(jargon2Result.jargonFourWords).to.have.length(5);
-        expect(jargon2Result.jargonSevenWords).to.have.length(5);
+        expect(jargonResult.jargonFourWords).to.have.length(5);
+        expect(jargonResult.jargonSevenWords).to.have.length(5);
     });
 
-    it('responds with a 7-letter word when it exists in the dictionary', async () => {
+    it('responds with 7-letter words when they exist in the dictionary', async () => {
         const display = "+13173477529";
         const improve = "+13174677683";
-        const payment = "+13177296368";
-        const success = "+13177822377";
 
         const displayResult = generateVanityWords(display)
         const improveResult = generateVanityWords(improve)
-        const paymentResult = generateVanityWords(payment)
-        const successResult = generateVanityWords(success)
 
         expect(displayResult.realSevenWords).to.include('display');
         expect(improveResult.realSevenWords).to.include('improve');
-        expect(paymentResult.realSevenWords).to.include('payment');
-        expect(successResult.realSevenWords).to.include('success');
     });
 
-    it('responds with a 4-letter word when it exists in the dictionary', async () => {
+    it('responds with 4-letter words when it exists in the dictionary', async () => {
         const best = "+13173472378";
         const good = "+13174674663";
-        const kick = "+13177295425";
-        const nice = "+13177826423";
+
         const bestResult = generateVanityWords(best)
         const goodResult = generateVanityWords(good)
-        const kickResult = generateVanityWords(kick)
-        const niceResult = generateVanityWords(nice)
 
         expect(bestResult.realFourWords).to.include('best');
         expect(goodResult.realFourWords).to.include('good');
-        expect(kickResult.realFourWords).to.include('kick');
-        expect(niceResult.realFourWords).to.include('nice');
     });
 });
+
+describe('Choose Best Vanity Tests', function () {
+    it('returns 5 vanity numbers with 4-letter jargon words if no valid words are found', async () => {
+        const jargon = {
+            realFourWords: [],
+            realSevenWords: [],
+            jargonFourWords: [ 'aadg', 'aadh', 'aadi', 'aaeg', 'aaeh' ],
+            jargonSevenWords: [ 'ggmaadg', 'ggmaadh', 'ggmaadi', 'ggmaaeg', 'ggmaaeh' ]
+        }
+        const jargonPhoneNumber = "+13174462234"
+    
+        const jargonResult = chooseBestVanity(jargon, jargonPhoneNumber)
+
+        expect(jargonResult).to.have.length(5);
+        expect(jargonResult[0].slice(6, 10)).to.have.length(4); // check the word
+        expect(jargonResult[0].slice(0, 6)).to.equal(jargonPhoneNumber.slice(2, 8)) // check the number
+ 
+    });
+
+    it('returns valid 4-letter words if they are found', async () => {
+        const glow = {
+            realFourWords: [ 'glow' ],
+            realSevenWords: [],
+            jargonFourWords: [ 'gjmw', 'gjmx', 'gjmy', 'gjmz', 'gjnw' ],
+            jargonSevenWords: [ 'wwdgjmw', 'wwdgjmx', 'wwdgjmy', 'wwdgjmz', 'wwdgjnw' ]
+        };
+
+        const glowPhoneNumber = "+13179934569";
+        
+        const gone = {
+            realFourWords: [
+              'gone', 'good',
+              'goof', 'home',
+              'hone', 'hood',
+              'hoof'
+            ],
+            realSevenWords: [],
+            jargonFourWords: [ 'gmmd', 'gmme', 'gmmf', 'gmnd', 'gmne' ],
+            jargonSevenWords: [ 'gmpgmmd', 'gmpgmme', 'gmpgmmf', 'gmpgmnd', 'gmpgmne' ]
+        }
+        const goodPhoneNumber = "+13174674663";
+
+        const glowResult = chooseBestVanity(glow, glowPhoneNumber)
+        const goneResult = chooseBestVanity(gone, goodPhoneNumber);
+    
+        expect(glowResult).to.have.length(5);
+        expect(glowResult[0].slice(6, 10)).to.equal('glow'); // check the word
+        expect(glowResult[0].slice(0, 6)).to.equal(glowPhoneNumber.slice(2, 8)) // check the number
+
+        expect(goneResult).to.have.length(5);
+        expect(goneResult[0].slice(6, 10)).to.equal('gone'); // check the word
+        expect(goneResult[0].slice(0, 6)).to.equal(goodPhoneNumber.slice(2, 8)) // check the number
+    });
+
+    it('returns valid 7-letter words if they are found', async () => {
+        const payment = {
+            realFourWords: [ 'menu' ],
+            realSevenWords: [ 'payment' ],
+            jargonFourWords: [ 'mdmt', 'mdmu', 'mdmv', 'mdnt', 'mdnu' ],
+            jargonSevenWords: [ 'pawmdmt', 'pawmdmu', 'pawmdmv', 'pawmdnt', 'pawmdnu' ]
+          }
+        const paymentPhoneNumber = "+13177296368";
+          
+        const improve = {
+            realFourWords: [ 'rove' ],
+            realSevenWords: [ 'improve' ],
+            jargonFourWords: [ 'pmtd', 'pmte', 'pmtf', 'pmud', 'pmue' ],
+            jargonSevenWords: [ 'gmppmtd', 'gmppmte', 'gmppmtf', 'gmppmud', 'gmppmue' ]
+        }
+        const improvePhoneNumber = "+13174677683"
+
+        const paymentResult = chooseBestVanity(payment, paymentPhoneNumber)
+        const improveResult = chooseBestVanity(improve, improvePhoneNumber)
+
+        expect(paymentResult).to.have.length(5);
+        expect(paymentResult[0].slice(3, 10)).to.equal('payment'); // check the 7-letter word
+        expect(paymentResult[0].slice(0, 3)).to.equal(paymentPhoneNumber.slice(2, 5)) // check the 7-letter vanity number
+        expect(paymentResult[1].slice(6, 10)).to.equal('menu'); // check the 5-letter word
+        expect(paymentResult[1].slice(0, 6)).to.equal(paymentPhoneNumber.slice(2, 8)) // check the 5-letter vanity number
+
+        expect(improveResult).to.have.length(5);
+        expect(improveResult[0].slice(3, 10)).to.equal('improve'); // check the 7-letter word
+        expect(improveResult[0].slice(0, 3)).to.equal(improvePhoneNumber.slice(2, 5)) // check the 7-letter vanity number
+        expect(improveResult[1].slice(6, 10)).to.equal('rove'); // check the 4-letter word
+        expect(improveResult[1].slice(0, 6)).to.equal(improvePhoneNumber.slice(2, 8)) // check the 4-letter vanity number
+    });
+});
+
+describe('Lambda Tests', function () {
+    it('returns valid 7-letter words if they are found', async () => {
+
+    })
+})

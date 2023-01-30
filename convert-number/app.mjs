@@ -34,3 +34,5 @@ export const lambdaHandler = async (event, context, callback) => {
     // 2: Swap dictionary data from an array to an object (or find better dictionaries) to improve runtime when looking up words
     // 3: README file with project set-up and documentation tracking for the entire project
         // double-check permissions --> probably need to add some permissions via `policies` to the template.yaml file
+
+console.log(generateVanityWords("+13174677683"));
