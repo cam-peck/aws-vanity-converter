@@ -30,20 +30,20 @@ npm install
 3. Build the project via SAM.
 
 ```bash
-sam build
+npm run build
 ```
 
 4. Deploy the project.
 
 ```bash
-sam deploy --guided
+npm run deploy -g
 ```
 
 ### Permissions
 
 AWS uses the IAM to determine access priviledges across all AWS Services. You'll need to add a permission for the lambda function to access the DynamoDB table. 
 
-1. Sign into the AWS console, navigate to the IAM page, and create a policy with the below JSON data. Make sure to add the ARN for your lambda function under `Resource:`.
+1. Sign into the AWS console, navigate to the IAM page, and create a policy with the below JSON data. Make sure to add the ARN for your dyanmoDB table under `Resource:`.
 
 ```
 {
@@ -78,16 +78,16 @@ AWS uses the IAM to determine access priviledges across all AWS Services. You'll
 2. Ensure you attach the policy to the current project via the `roles` tab.
 
 ### Testing
-1. Unit tests are defined in `~/convert-number/tests` folder. To run tests while you are in `~/convert-number`...
+1. Unit tests are defined in `~/tests\unit` folder. To run tests while you are in `aws-vanity-converter`...
 
 ```bash
 npm run test
 ```
 
-2. To run an Amazon Connect test event, either use the provided event in `~convert-number/events` or add your own `event.json` in the `events` folder. To run tests while you are in `~/aws-vanity-converter`...
+2. To run an Amazon Connect test event, either use the provided events in `aws-vanity-converter/events` or add your own `event.json` in the `events` folder. To run a test event...
 
 ```bash
-sam local invoke NumberToVanityFunction -e events/event.json 
+sam local invoke NumberToVanityFunction -e events/valid-event.json
 ```
 
 ### Cleanup
