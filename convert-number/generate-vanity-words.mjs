@@ -28,32 +28,33 @@ function generateVanityWords (phoneNumber) {
     const realFourWords = [];
     
     for (let i = 0; i < possibleFirst.length; i++) {
-      for (let j = 0; j < possibleSecond.length; j++) {
-          for (let k = 0; k < possibleThird.length; k++) {
-              for (let l = 0; l < possibleFourth.length; l++) {
-                  for (let m = 0; m < possibleFifth.length; m++) {
-                      for (let n = 0; n < possibleSixth.length; n++) {
-                          for (let o = 0; o < possibleSeventh.length; o++) {
-                            const curSevenLetterWord = possibleFirst[i] + possibleSecond[j] + possibleThird[k] + possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
-                            const curFourLetterWord = possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
-                            if (check[4]) {
-                                if (checkDictionary(curFourLetterWord, 4) && !realFourWords.includes(curFourLetterWord)) {
-                                    realFourWords.push(curFourLetterWord);
-                                } else {
-                                    if (jargonFourWords.length < 5) {
-                                        jargonFourWords.push(curFourLetterWord);
-                                    }
-                                } 
-                            }
-                            if (check[7]) {
-                                if (checkDictionary(curSevenLetterWord, 7) && !realSevenWords.includes(curSevenLetterWord)) {
-                                    realSevenWords.push(curSevenLetterWord);
-                                } else {
-                                    if (jargonSevenWords.length < 5) {
-                                        jargonSevenWords.push(curSevenLetterWord);
+        for (let j = 0; j < possibleSecond.length; j++) {
+            for (let k = 0; k < possibleThird.length; k++) {
+                for (let l = 0; l < possibleFourth.length; l++) {
+                    for (let m = 0; m < possibleFifth.length; m++) {
+                        for (let n = 0; n < possibleSixth.length; n++) {
+                            for (let o = 0; o < possibleSeventh.length; o++) {
+                                const curSevenLetterWord = possibleFirst[i] + possibleSecond[j] + possibleThird[k] + possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
+                                const curFourLetterWord = possibleFourth[l] +possibleFifth[m] + possibleSixth[n] + possibleSeventh[o];
+                                if (check[4]) {
+                                    if (checkDictionary(curFourLetterWord, 4) && !realFourWords.includes(curFourLetterWord)) {
+                                        realFourWords.push(curFourLetterWord);
+                                    } else {
+                                        if (jargonFourWords.length < 5) {
+                                            jargonFourWords.push(curFourLetterWord);
+                                        }
+                                    } 
+                                }
+                                if (check[7]) {
+                                    if (checkDictionary(curSevenLetterWord, 7) && !realSevenWords.includes(curSevenLetterWord)) {
+                                        realSevenWords.push(curSevenLetterWord);
+                                    } else {
+                                        if (jargonSevenWords.length < 5) {
+                                            jargonSevenWords.push(curSevenLetterWord);
+                                        }
                                     }
                                 }
-                            }}
+                            }
                         }
                     }
                 }
@@ -63,4 +64,4 @@ function generateVanityWords (phoneNumber) {
     return { realFourWords, realSevenWords, jargonFourWords, jargonSevenWords };
 }
 
-export { generateVanityWords }
+export { generateVanityWords };
