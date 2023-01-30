@@ -2,6 +2,8 @@ import { generateVanityWords } from "./generate-vanity-words.mjs";
 import { chooseBestVanity } from './choose-best-vanity.mjs'
 import { ddbAddVanityNumbers } from './lib/ddb/ddb-add-vanity-numbers.mjs'
 import { ddbLookupPhoneNumber } from "./lib/ddb/ddb-lookup-phone-number.mjs";
+import validEvent from '../events/valid-event.json' assert { type: 'json' };
+import invalidEvent from '../events/invalid-event.json' assert { type: 'json' };
 
 export const lambdaHandler = async (event, context) => {
 

@@ -3,7 +3,11 @@ import { generateVanityWords } from '../../generate-vanity-words.mjs';
 import { chooseBestVanity } from '../../choose-best-vanity.mjs';
 import { lambdaHandler } from '../../app.mjs';
 import { expect } from 'chai';
-var event, context;
+import validEvent from '../../../events/valid-event.json' assert { type: 'json' };
+import invalidEvent from '../../../events/invalid-event.json' assert { type: 'json' };
+const context = {};
+
+console.log(lambdaHandler)
 
 describe('Vanity Number Tests', function () {
     it('responds with four arrays', async () => {
@@ -144,8 +148,24 @@ describe('Choose Best Vanity Tests', function () {
     });
 });
 
-describe('Lambda Tests', function () {
-    it('returns valid 7-letter words if they are found', async () => {
+describe('Lambda Handler Tests', function () {
+    it('returns an object with "result: true" when numbers are successfully generated', async () => {
+        const validEventResult = await lambdaHandler(validEvent, context);
+        const { result } = validEventResult;
+        expect(result).to.equal(true);
+    });
 
-    })
-})
+    it('returns an object with "result: false" when a number cannot be generated', async () => {
+        const invalidEventResult = await lambdaHandler(invalidEvent, context);
+        const { result } = invalidEventResult;
+        expect(result).to.equal(false);
+    });
+
+    it('returns three vanity numbers for valid phone numbers', async () => {
+        const validEventResult = await lambdaHandler(validEvent, context);
+        const { vanityNumber1, vanityNumber2, vanityNumber3 } = validEventResult;
+        expect(vanityNumber1).to.have.length(10);
+        expect(vanityNumber2).to.have.length(10);
+        expect(vanityNumber3).to.have.length(10);
+    });
+});
