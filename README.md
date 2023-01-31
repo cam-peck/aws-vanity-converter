@@ -55,7 +55,7 @@ npm run deploy -g
 
 AWS uses the IAM to determine access priviledges across all AWS Services. You'll need to add a permission for the lambda function to access the DynamoDB table. 
 
-1. Sign into the AWS console, navigate to the IAM page, and create a policy with the below JSON data. Make sure to add the ARN for your dyanmoDB table under `Resource:`.
+1. Sign into the AWS console, navigate to the IAM page, and create a policy with the below JSON data. Make sure to add the ARN for your dynamoDB table under `Resource:`.
 
 ```
 {
