@@ -13,7 +13,7 @@
     "test": "mocha tests/unit/",
     "build": "sam build",
     "deploy": "sam deploy",
-    "deploy -g": "sam deploy --guided"
+    "guided-deploy": "sam deploy --guided"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

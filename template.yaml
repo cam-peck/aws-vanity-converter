@@ -24,8 +24,6 @@ Resources:
       ProvisionedThroughput: 
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
-      # SSESpecification:
-      #   SSEEnabled: false
       TableName: VanityNumbers
 
 Outputs:
