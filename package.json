@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A vanity phone number converter using AWS lambda and DynamoDB",
   "main": "app.js",
-  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
-  "author": "SAM CLI",
+  "repository": "https://github.com/cam-peck/aws-vanity-converter",
+  "author": "Cameron Peck -- generated from SAM CLI Template",
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.259.0"
