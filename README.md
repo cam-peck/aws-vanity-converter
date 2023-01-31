@@ -99,7 +99,7 @@ Amazon Connect recently added support for importing & exporting contact flows. F
 
 2. Sign into the AWS console in your browser. Either create a new Amazon Connect instance, or sign into an existing instance.
 
-3. Create a new contact flow. Using the small arrow at the top right of the screen, click `Import`. Locate the `vanity-number-flow` edited in step 1, and add it to the board.
+3. Create a new contact flow. Using the small arrow at the top right of the screen, click `Import`. Locate the `vanity-number-flow` edited in step 1, and add it to the board. Make sure to save and publish your board.
 
 4. Link your contact flow to a desired phone number.
 
