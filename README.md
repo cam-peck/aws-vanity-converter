@@ -93,7 +93,7 @@ AWS uses the IAM to determine access priviledges across all AWS Services. You'll
 
 ### Amazon Connect Contact Flow
 
-Amazon Connect recently added support for importing & exporting contact flows. Follow the directions below to set up a contact flow in Amazon Connect.
+Amazon Connect supports importing & exporting contact flows. Follow the directions below to set up a contact flow in Amazon Connect.
 
 1. Open the file `contact-flow/vanity-number-flow` in your code editor. Add the ARN for your lambda function to line 152. You can grab this ARN either from the AWS console or from the output when you deploy your project.
 
