@@ -1,0 +1,352 @@
+{
+   "Version": "2019-10-30",
+   "StartAction": "7f1f1c44-b55a-4031-a263-0fa31da76267",
+   "Metadata": {
+     "entryPointPosition": {
+       "x": -220.8,
+       "y": -21.6
+     },
+     "ActionMetadata": {
+       "c01391c0-17a1-4da9-aadd-1baba7cd8f69": {
+         "position": {
+           "x": -105.60000000000001,
+           "y": 154.4
+         }
+       },
+       "40aa3482-c295-4c2f-ac52-cf84971f3730": {
+         "position": {
+           "x": -98.4,
+           "y": 347.20000000000005
+         },
+         "overrideConsoleVoice": false
+       },
+       "57e400c1-b99b-47c7-9ef5-ed8a2727bcb6": {
+         "position": {
+           "x": 379.20000000000005,
+           "y": 149.6
+         },
+         "dynamicMetadata": {}
+       },
+       "0439b7fc-f97e-406f-9b70-e376638878b8": {
+         "position": {
+           "x": 637.6,
+           "y": 38.400000000000006
+         },
+         "conditionMetadata": [
+           {
+             "id": "51359ff5-d0d7-4f7c-8f6d-6451ac5610da",
+             "operator": {
+               "name": "Equals",
+               "value": "Equals",
+               "shortDisplay": "="
+             },
+             "value": "true"
+           },
+           {
+             "id": "586f20a1-82f4-4354-a47d-27a9e7b29d8e",
+             "operator": {
+               "name": "Equals",
+               "value": "Equals",
+               "shortDisplay": "="
+             },
+             "value": "false"
+           }
+         ]
+       },
+       "c497e6e6-663b-4312-a740-e5bcbb6be763": {
+         "position": {
+           "x": 639.2,
+           "y": 320
+         }
+       },
+       "6e77e6e5-eda1-4c9b-b09b-cc2a27fc4950": {
+         "position": {
+           "x": 923.2,
+           "y": 154.4
+         }
+       },
+       "e9a0b2d2-ea02-4358-b7eb-855c97beb155": {
+         "position": {
+           "x": 922.4000000000001,
+           "y": -46.400000000000006
+         }
+       },
+       "645f7eb4-df93-48be-a6fa-a6fda68a810f": {
+         "position": {
+           "x": 1192.8,
+           "y": -43.2
+         },
+         "conditionMetadata": [
+           {
+             "id": "e46266ce-e536-46f6-8252-62ff0cff738f",
+             "value": "1"
+           },
+           {
+             "id": "00491783-e8aa-4c60-bffc-71799a1a3bf3",
+             "value": "2"
+           }
+         ]
+       },
+       "a5eec23f-3b5d-46c4-a710-3fdca5a94aa1": {
+         "position": {
+           "x": 1444,
+           "y": 375.20000000000005
+         }
+       },
+       "b68184b5-319a-4ce8-9e8a-71f3c957000d": {
+         "position": {
+           "x": 1196,
+           "y": 333.6
+         }
+       },
+       "7f1f1c44-b55a-4031-a263-0fa31da76267": {
+         "position": {
+           "x": -107.2,
+           "y": -20.8
+         }
+       },
+       "a87a6878-e3a3-46a6-8df5-584f2103d779": {
+         "position": {
+           "x": 153.60000000000002,
+           "y": 146.4
+         }
+       },
+       "a89b3d74-0449-4446-b8c4-2760766c9068": {
+         "position": {
+           "x": 159.20000000000002,
+           "y": 380
+         }
+       }
+     },
+     "name": "Vanity Number Flow",
+     "description": "",
+     "type": "contactFlow",
+     "status": "published",
+     "hash": {}
+   },
+   "Actions": [
+     {
+       "Parameters": {
+         "RecordingBehavior": {
+           "RecordedParticipants": []
+         }
+       },
+       "Identifier": "c01391c0-17a1-4da9-aadd-1baba7cd8f69",
+       "Type": "UpdateContactRecordingBehavior",
+       "Transitions": {
+         "NextAction": "40aa3482-c295-4c2f-ac52-cf84971f3730"
+       }
+     },
+     {
+       "Parameters": {
+         "TextToSpeechVoice": "Matthew"
+       },
+       "Identifier": "40aa3482-c295-4c2f-ac52-cf84971f3730",
+       "Type": "UpdateContactTextToSpeechVoice",
+       "Transitions": {
+         "NextAction": "a87a6878-e3a3-46a6-8df5-584f2103d779"
+       }
+     },
+     {
+       "Parameters": {
+         "LambdaFunctionARN": "",
+         "InvocationTimeLimitSeconds": "5"
+       },
+       "Identifier": "57e400c1-b99b-47c7-9ef5-ed8a2727bcb6",
+       "Type": "InvokeLambdaFunction",
+       "Transitions": {
+         "NextAction": "0439b7fc-f97e-406f-9b70-e376638878b8",
+         "Errors": [
+           {
+             "NextAction": "c497e6e6-663b-4312-a740-e5bcbb6be763",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {
+         "ComparisonValue": "$.External.result"
+       },
+       "Identifier": "0439b7fc-f97e-406f-9b70-e376638878b8",
+       "Type": "Compare",
+       "Transitions": {
+         "NextAction": "c497e6e6-663b-4312-a740-e5bcbb6be763",
+         "Conditions": [
+           {
+             "NextAction": "e9a0b2d2-ea02-4358-b7eb-855c97beb155",
+             "Condition": {
+               "Operator": "Equals",
+               "Operands": [
+                 "true"
+               ]
+             }
+           },
+           {
+             "NextAction": "6e77e6e5-eda1-4c9b-b09b-cc2a27fc4950",
+             "Condition": {
+               "Operator": "Equals",
+               "Operands": [
+                 "false"
+               ]
+             }
+           }
+         ],
+         "Errors": [
+           {
+             "NextAction": "c497e6e6-663b-4312-a740-e5bcbb6be763",
+             "ErrorType": "NoMatchingCondition"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {
+         "Text": "We encountered an error on our end converting your number. Please send an email with your phone number to debugteam@company.net."
+       },
+       "Identifier": "c497e6e6-663b-4312-a740-e5bcbb6be763",
+       "Type": "MessageParticipant",
+       "Transitions": {
+         "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+         "Errors": [
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {
+         "Text": "We were unable to create a vanity number. We do not currently support numbers with a 0 or 1 in the last 4 digits. We also do not support non-US numbers."
+       },
+       "Identifier": "6e77e6e5-eda1-4c9b-b09b-cc2a27fc4950",
+       "Type": "MessageParticipant",
+       "Transitions": {
+         "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+         "Errors": [
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {
+         "SSML": "<speak> Your vanity numbers are <say-as interpret-as=\"telephone\"> $.External.vanityNumber1 </say-as>, <say-as interpret-as=\"telephone\"> $.External.vanityNumber2 </say-as>, and  <say-as interpret-as=\"telephone\"> $.External.vanityNumber3 </say-as></speak>"
+       },
+       "Identifier": "e9a0b2d2-ea02-4358-b7eb-855c97beb155",
+       "Type": "MessageParticipant",
+       "Transitions": {
+         "NextAction": "645f7eb4-df93-48be-a6fa-a6fda68a810f",
+         "Errors": [
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {
+         "StoreInput": "False",
+         "InputTimeLimitSeconds": "5",
+         "Text": "Press 1 to hear your vanity numbers again.\nPress 2 to disconnect from the call."
+       },
+       "Identifier": "645f7eb4-df93-48be-a6fa-a6fda68a810f",
+       "Type": "GetParticipantInput",
+       "Transitions": {
+         "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+         "Conditions": [
+           {
+             "NextAction": "e9a0b2d2-ea02-4358-b7eb-855c97beb155",
+             "Condition": {
+               "Operator": "Equals",
+               "Operands": [
+                 "1"
+               ]
+             }
+           },
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "Condition": {
+               "Operator": "Equals",
+               "Operands": [
+                 "2"
+               ]
+             }
+           }
+         ],
+         "Errors": [
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "ErrorType": "InputTimeLimitExceeded"
+           },
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "ErrorType": "NoMatchingCondition"
+           },
+           {
+             "NextAction": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {},
+       "Identifier": "a5eec23f-3b5d-46c4-a710-3fdca5a94aa1",
+       "Type": "DisconnectParticipant",
+       "Transitions": {}
+     },
+     {
+       "Parameters": {
+         "Text": "Thank you for using vanity number generator."
+       },
+       "Identifier": "b68184b5-319a-4ce8-9e8a-71f3c957000d",
+       "Type": "MessageParticipant",
+       "Transitions": {
+         "NextAction": "a5eec23f-3b5d-46c4-a710-3fdca5a94aa1",
+         "Errors": [
+           {
+             "NextAction": "a5eec23f-3b5d-46c4-a710-3fdca5a94aa1",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {
+         "FlowLoggingBehavior": "Enabled"
+       },
+       "Identifier": "7f1f1c44-b55a-4031-a263-0fa31da76267",
+       "Type": "UpdateFlowLoggingBehavior",
+       "Transitions": {
+         "NextAction": "c01391c0-17a1-4da9-aadd-1baba7cd8f69"
+       }
+     },
+     {
+       "Parameters": {
+         "Text": "Thank you for calling Vanity Number Generator. A vanity number for your phone number is being generated now."
+       },
+       "Identifier": "a87a6878-e3a3-46a6-8df5-584f2103d779",
+       "Type": "MessageParticipant",
+       "Transitions": {
+         "NextAction": "57e400c1-b99b-47c7-9ef5-ed8a2727bcb6",
+         "Errors": [
+           {
+             "NextAction": "a89b3d74-0449-4446-b8c4-2760766c9068",
+             "ErrorType": "NoMatchingError"
+           }
+         ]
+       }
+     },
+     {
+       "Parameters": {},
+       "Identifier": "a89b3d74-0449-4446-b8c4-2760766c9068",
+       "Type": "DisconnectParticipant",
+       "Transitions": {}
+     }
+   ]
+ }

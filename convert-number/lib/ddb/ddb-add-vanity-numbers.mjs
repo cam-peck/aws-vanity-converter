@@ -1,7 +1,7 @@
 import { PutItemCommand } from '@aws-sdk/client-dynamodb';
 import { ddbClient } from './ddb-client.mjs';
 
-async function ddbAddVanityNumbers(phoneNumber, vanityNumbers) { // vanityNumbers arrives as an array of 3 numbers //
+async function ddbAddVanityNumbers(phoneNumber, vanityNumbers) {
     const params = {
         TableName: 'VanityNumbers',
         Item: {
@@ -9,6 +9,8 @@ async function ddbAddVanityNumbers(phoneNumber, vanityNumbers) { // vanityNumber
             vanityNumber1: { S: vanityNumbers[0]},
             vanityNumber2: { S: vanityNumbers[1]},
             vanityNumber3: { S: vanityNumbers[2]},
+            vanityNumber4: { S: vanityNumbers[3]},
+            vanityNumber5: { S: vanityNumbers[4]},
         }
     };
     try {
