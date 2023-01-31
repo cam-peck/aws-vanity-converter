@@ -13,7 +13,7 @@ const keypadObj = {
 };
 
 function generateVanityWords (phoneNumber) { 
-    const { sevenDigitNumber, check } = formatPhoneNumber(phoneNumber); // check: { 4: t / f, 7: t / f } } where 4 and 7 represent valid 4 & 7 digit numbers
+    const { sevenDigitNumber, check } = formatPhoneNumber(phoneNumber); // check stores whether 4 & 7 digit vanity numbers can be generated
     const possibleFirst = keypadObj[sevenDigitNumber[0]];
     const possibleSecond = keypadObj[sevenDigitNumber[1]];
     const possibleThird= keypadObj[sevenDigitNumber[2]];
@@ -22,7 +22,6 @@ function generateVanityWords (phoneNumber) {
     const possibleSixth = keypadObj[sevenDigitNumber[5]];
     const possibleSeventh = keypadObj[sevenDigitNumber[6]];
     
-    const jargonSevenWords = [];
     const realSevenWords = [];
     const jargonFourWords = [];
     const realFourWords = [];
@@ -48,10 +47,6 @@ function generateVanityWords (phoneNumber) {
                                 if (check[7]) {
                                     if (checkDictionary(curSevenLetterWord, 7) && !realSevenWords.includes(curSevenLetterWord)) {
                                         realSevenWords.push(curSevenLetterWord);
-                                    } else {
-                                        if (jargonSevenWords.length < 5) {
-                                            jargonSevenWords.push(curSevenLetterWord);
-                                        }
                                     }
                                 }
                             }
@@ -61,7 +56,7 @@ function generateVanityWords (phoneNumber) {
             }
         }
     }
-    return { realFourWords, realSevenWords, jargonFourWords, jargonSevenWords };
+    return { realFourWords, realSevenWords, jargonFourWords };
 }
 
 export { generateVanityWords };

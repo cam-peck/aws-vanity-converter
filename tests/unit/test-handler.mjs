@@ -1,7 +1,7 @@
 'use strict';
 import { generateVanityWords } from '../../convert-number/generate-vanity-words.mjs';
 import { chooseBestVanity } from '../../convert-number/choose-best-vanity.mjs';
-import { lambdaHandler } from '../../convert-number/app.mjs';
+import { convertNumberHandler } from '../../convert-number/app.mjs';
 import { expect } from 'chai';
 import validEvent from '../../events/valid-event.json' assert { type: 'json' };
 import invalidEvent from '../../events/invalid-event.json' assert { type: 'json' };
@@ -9,15 +9,14 @@ import invalidEvent from '../../events/invalid-event.json' assert { type: 'json'
 const context = {};
 
 describe('Vanity Number Tests', function () {
-    it('responds with four arrays', async () => {
-        const number1 = '+13179486377'; // witness
-        const result = generateVanityWords(number1);
+    it('responds with three arrays', async () => {
+        const witness = '+13179486377';
+        const witnessResult = generateVanityWords(witness);
 
-        expect(result).to.be.an('object');
-        expect(result.realFourWords).to.be.an('array');
-        expect(result.realSevenWords).to.be.an('array');
-        expect(result.jargonFourWords).to.be.an('array');
-        expect(result.jargonSevenWords).to.be.an('array');
+        expect(witnessResult).to.be.an('object');
+        expect(witnessResult.realFourWords).to.be.an('array');
+        expect(witnessResult.realSevenWords).to.be.an('array');
+        expect(witnessResult.jargonFourWords).to.be.an('array');
     });
 
     it('always responds with 5 words in the jargon-array', async () => {
@@ -30,11 +29,8 @@ describe('Vanity Number Tests', function () {
         const jargonResult = generateVanityWords(jargon);
 
         expect(displayResult.jargonFourWords).to.have.length(5);
-        expect(displayResult.jargonSevenWords).to.have.length(5);
         expect(improveResult.jargonFourWords).to.have.length(5);
-        expect(improveResult.jargonSevenWords).to.have.length(5);
         expect(jargonResult.jargonFourWords).to.have.length(5);
-        expect(jargonResult.jargonSevenWords).to.have.length(5);
     });
 
     it('responds with 7-letter words when they exist in the dictionary', async () => {
@@ -65,16 +61,18 @@ describe('Choose Best Vanity Tests', function () {
         const jargon = {
             realFourWords: [],
             realSevenWords: [],
-            jargonFourWords: [ 'aadg', 'aadh', 'aadi', 'aaeg', 'aaeh' ],
-            jargonSevenWords: [ 'ggmaadg', 'ggmaadh', 'ggmaadi', 'ggmaaeg', 'ggmaaeh' ]
+            jargonFourWords: [ 'aadg', 'aadh', 'aadi', 'aaeg', 'aaeh' ]
         };
         const jargonPhoneNumber = '+13174462234';
     
         const jargonResult = chooseBestVanity(jargon, jargonPhoneNumber);
 
         expect(jargonResult).to.have.length(5);
-        expect(jargonResult[0].slice(6, 10)).to.have.length(4); // check the word
-        expect(jargonResult[0].slice(0, 6)).to.equal(jargonPhoneNumber.slice(2, 8)); // check the number
+        expect(jargonResult[0]).to.equal('317-446-AADG');
+        expect(jargonResult[1]).to.equal('317-446-AADH');
+        expect(jargonResult[2]).to.equal('317-446-AADI');
+        expect(jargonResult[3]).to.equal('317-446-AAEG');
+        expect(jargonResult[4]).to.equal('317-446-AAEH');
  
     });
 
@@ -82,8 +80,7 @@ describe('Choose Best Vanity Tests', function () {
         const glow = {
             realFourWords: [ 'glow' ],
             realSevenWords: [],
-            jargonFourWords: [ 'gjmw', 'gjmx', 'gjmy', 'gjmz', 'gjnw' ],
-            jargonSevenWords: [ 'wwdgjmw', 'wwdgjmx', 'wwdgjmy', 'wwdgjmz', 'wwdgjnw' ]
+            jargonFourWords: [ 'gjmw', 'gjmx', 'gjmy', 'gjmz', 'gjnw' ]
         };
 
         const glowPhoneNumber = '+13179934569';
@@ -96,8 +93,7 @@ describe('Choose Best Vanity Tests', function () {
                 'hoof'
             ],
             realSevenWords: [],
-            jargonFourWords: [ 'gmmd', 'gmme', 'gmmf', 'gmnd', 'gmne' ],
-            jargonSevenWords: [ 'gmpgmmd', 'gmpgmme', 'gmpgmmf', 'gmpgmnd', 'gmpgmne' ]
+            jargonFourWords: [ 'gmmd', 'gmme', 'gmmf', 'gmnd', 'gmne' ]
         };
         const goodPhoneNumber = '+13174674663';
 
@@ -105,66 +101,57 @@ describe('Choose Best Vanity Tests', function () {
         const goneResult = chooseBestVanity(gone, goodPhoneNumber);
     
         expect(glowResult).to.have.length(5);
-        expect(glowResult[0].slice(6, 10)).to.equal('glow'); // check the word
-        expect(glowResult[0].slice(0, 6)).to.equal(glowPhoneNumber.slice(2, 8)); // check the number
+        expect(glowResult[0]).to.equal('317-993-GLOW');
+        expect(glowResult[1]).to.equal('317-993-GJMW');
+        expect(glowResult[2]).to.equal('317-993-GJMX');
+        expect(glowResult[3]).to.equal('317-993-GJMY');
+        expect(glowResult[4]).to.equal('317-993-GJMZ');
 
         expect(goneResult).to.have.length(5);
-        expect(goneResult[0].slice(6, 10)).to.equal('gone'); // check the word
-        expect(goneResult[0].slice(0, 6)).to.equal(goodPhoneNumber.slice(2, 8)); // check the number
+        expect(goneResult[0]).to.equal('317-467-GONE');
+        expect(goneResult[1]).to.equal('317-467-GOOD');
+        expect(goneResult[2]).to.equal('317-467-GOOF');
+        expect(goneResult[3]).to.equal('317-467-HOME');
+        expect(goneResult[4]).to.equal('317-467-HONE');
     });
 
     it('returns valid 7-letter words if they are found', async () => {
         const payment = {
             realFourWords: [ 'menu' ],
             realSevenWords: [ 'payment' ],
-            jargonFourWords: [ 'mdmt', 'mdmu', 'mdmv', 'mdnt', 'mdnu' ],
-            jargonSevenWords: [ 'pawmdmt', 'pawmdmu', 'pawmdmv', 'pawmdnt', 'pawmdnu' ]
+            jargonFourWords: [ 'mdmt', 'mdmu', 'mdmv', 'mdnt', 'mdnu' ]
         };
         const paymentPhoneNumber = '+13177296368';
-          
-        const improve = {
-            realFourWords: [ 'rove' ],
-            realSevenWords: [ 'improve' ],
-            jargonFourWords: [ 'pmtd', 'pmte', 'pmtf', 'pmud', 'pmue' ],
-            jargonSevenWords: [ 'gmppmtd', 'gmppmte', 'gmppmtf', 'gmppmud', 'gmppmue' ]
-        };
-        const improvePhoneNumber = '+13174677683';
 
         const paymentResult = chooseBestVanity(payment, paymentPhoneNumber);
-        const improveResult = chooseBestVanity(improve, improvePhoneNumber);
 
         expect(paymentResult).to.have.length(5);
-        expect(paymentResult[0].slice(3, 10)).to.equal('payment'); // check the 7-letter word
-        expect(paymentResult[0].slice(0, 3)).to.equal(paymentPhoneNumber.slice(2, 5)); // check the 7-letter vanity number
-        expect(paymentResult[1].slice(6, 10)).to.equal('menu'); // check the 5-letter word
-        expect(paymentResult[1].slice(0, 6)).to.equal(paymentPhoneNumber.slice(2, 8)); // check the 5-letter vanity number
-
-        expect(improveResult).to.have.length(5);
-        expect(improveResult[0].slice(3, 10)).to.equal('improve'); // check the 7-letter word
-        expect(improveResult[0].slice(0, 3)).to.equal(improvePhoneNumber.slice(2, 5)); // check the 7-letter vanity number
-        expect(improveResult[1].slice(6, 10)).to.equal('rove'); // check the 4-letter word
-        expect(improveResult[1].slice(0, 6)).to.equal(improvePhoneNumber.slice(2, 8)); // check the 4-letter vanity number
+        expect(paymentResult[0]).to.equal('317-PAYMENT');
+        expect(paymentResult[1]).to.equal('317-729-MENU');
+        expect(paymentResult[2]).to.equal('317-729-MDMT');
+        expect(paymentResult[3]).to.equal('317-729-MDMU');
+        expect(paymentResult[4]).to.equal('317-729-MDMV');
     });
 });
 
-describe('Lambda Handler Tests', function () {
+describe('Convert Number Handler Tests', function () {
     it('returns an object with "result: true" when numbers are successfully generated', async () => {
-        const validEventResult = await lambdaHandler(validEvent, context);
+        const validEventResult = await convertNumberHandler(validEvent, context);
         const { result } = validEventResult;
         expect(result).to.equal(true);
     });
 
     it('returns an object with "result: false" when a number cannot be generated', async () => {
-        const invalidEventResult = await lambdaHandler(invalidEvent, context);
+        const invalidEventResult = await convertNumberHandler(invalidEvent, context);
         const { result } = invalidEventResult;
         expect(result).to.equal(false);
     });
 
     it('returns three vanity numbers for valid phone numbers', async () => {
-        const validEventResult = await lambdaHandler(validEvent, context);
+        const validEventResult = await convertNumberHandler(validEvent, context);
         const { vanityNumber1, vanityNumber2, vanityNumber3 } = validEventResult;
-        expect(vanityNumber1).to.have.length(10);
-        expect(vanityNumber2).to.have.length(10);
-        expect(vanityNumber3).to.have.length(10);
+        expect(vanityNumber1).to.equal('317-487-SHIV');
+        expect(vanityNumber2).to.equal('317-487-PGGT');
+        expect(vanityNumber3).to.equal('317-487-PGGU');
     });
 });

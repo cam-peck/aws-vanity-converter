@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: convert-number/
-      Handler: app.lambdaHandler
+      Handler: app.convertNumberHandler
       Runtime: nodejs18.x
       Architectures:
         - x86_64
