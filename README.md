@@ -1,6 +1,6 @@
 # aws-vanity-converter
 
-This application uses AWS Lambda, AWS DynamoDB, and AWS Connect to create, store, and read vanity numbers to users that call into a call center. To try out the application, call the number `316-816-0480`. Currently, only US numbers without a 0 or 1 in the last four digits are supported.
+This application uses AWS Lambda, AWS DynamoDB, and Amazon Connect to create, store, and read vanity numbers to users that call into a call center. To try out the application, call the number `316-816-0480`. Currently, only US numbers without a 0 or 1 in the last four digits are supported.
 
 ## Development
 
