@@ -126,7 +126,7 @@ aws cloudformation delete-stack --stack-name aws-vanity-converter
 
 ## Writing and Documentation
 
-The first thing I did after recieving the project was scope out the requirements. This was the first project I've developed using AWS serverless in VSCode, so I figured setting up the repo would take at **least** a day or two. I laid out another day for the lambda function, and a fourth day for integrating DynamoDB. The last day would be cleanup. With my plan in hand, I got to setting up my repository.
+The first thing I did after recieving the project was scope out the requirements. This was the first project I've developed using AWS serverless in VSCode, so I figured setting up the repo and playing around with contact flows would take at **least** a day or two. I laid out another day for the lambda function, and a fourth day for integrating DynamoDB. The last day would be cleanup. With my plan in hand, I got to setting up my repository.
 
 ### Why AWS SAM?
 
@@ -144,6 +144,10 @@ Generating all the letter combinations was pretty straightforward. I used an obj
 ### DynamoDB Integration
 
 The final part of the project was integrating DynamoDB. I ran into another setup issue here -- whether to use `aws-sdk(v2)` or `aws-sdk(v3)`. After finding out that v3 offered modular imports and had better `async / await` support, the decision was pretty easy. I only needed the DynamoDB portion and I love `async / await` so... I went with v3. The syntax for querying the database was similar to what I'd done with `postgreSQL`, so no big problems during coding there. I did run into a permissions error while testing the code, which I resolved by creating a custom `Dynamo PutItem & Dynamo GetItem` permission for my lambda function. Minimum permissions required is good! With more time, I'd like to set-up the `template.yaml` file to implement those permissions instead of doing it manually --> that'd make it a lot easier for someone to download and start using my project. To finish off the Dynamo integration, I added a `GET` route to check if a number already existed in the database --> no need to do all the algo work twice. 
+
+### Amazon Connect
+
+Developing a contact-flow and integrating the lambda function was pretty straightforward (thank you Daniel Bloy!!!), but I did struggle getting Amazon Polly to read the phone number correctly. I spent awhile reading documentation about Supported SSML Tags, and ultimately settled on the number being read as seperate digits (with `interpret-as='telephone'`) , and the vanity word being read as individual letters. With some more time, I'd like to get Amazon Polly to read out the full word in a vanity number, but couldn't think of a way to tell Polly the difference between jargon and real words without adding properties and code to my lambda function.
 
 ### Closing Notes
 
