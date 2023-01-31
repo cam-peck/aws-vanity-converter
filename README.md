@@ -6,34 +6,46 @@ A serverless project that uses AWS Lambda & AWS DynamoDB with Amazon Connect to 
 
 ### System Requirements
 
-- AWS CLI
-- SAM CLI
-- Node.js v14 or higher
+- AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- SAM CLI (https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+- Node
 - Docker
-- npm
 
 ### Getting Started
 
-1. Clone the repository.
+1. Ensure the AWS CLI and SAM CLI are installed.
+
+```
+aws --version
+sam --version
+```
+
+2. If you need to setup your AWS credentials... (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+
+```
+aws configure
+```
+
+3. Clone the repository.
 
 ```bash
 git clone https://github.com/cam-peck/aws-vanity-converter.git
 cd aws-vanity-converter
 ```
 
-2. Install all dependencies with npm.
+4. Install all dependencies with npm.
 
 ```bash
 npm install
 ```
 
-3. Build the project via SAM.
+5. Build the project via SAM.
 
 ```bash
 npm run build
 ```
 
-4. Deploy the project.
+5. Deploy the project.
 
 ```bash
 npm run deploy -g
@@ -77,14 +89,26 @@ AWS uses the IAM to determine access priviledges across all AWS Services. You'll
 
 2. Ensure you attach the policy to the current project via the `roles` tab.
 
+### Amazon Connect Contact Flow
+
+Amazon Connect recently added support for exporting contact flows. Follow the directions below to set up a default contact flow that converts an incoming number to a vanity number. Currently, international numbers and numbers that have a 1 or 0 in the last four digits are not supported.
+
+1. Open the file `contact-flow/vanity-number-flow` in your code editor. Add the ARN for your lambda function to line 339. You can grab this ARN either from the AWS console or from the output when you deploy your project.
+
+2. Sign into the AWS console in your browser. Add an Amazon Connect instance, and sign into your instance.
+
+3. Create a new contact flow. Using the small arrow at the top right of the screen, click `Import`. Locate the `vanity-number-flow` edited in step 1, and add it to the board.
+
+4. You're good to go! Call any number attached to your Connect Instance to test the project.
+
 ### Testing
-1. Unit tests are defined in `~/tests\unit` folder. To run tests while you are in `aws-vanity-converter`...
+1. Unit tests are defined in `~/tests\unit` folder. Run tests via...
 
 ```bash
 npm run test
 ```
 
-2. To run an Amazon Connect test event, either use the provided events in `aws-vanity-converter/events` or add your own `event.json` in the `events` folder. To run a test event...
+2. To run an Amazon Connect test event, use either the provided events in `aws-vanity-converter/events` or add your own `event.json` in the `events` folder. To run a test event...
 
 ```bash
 sam local invoke NumberToVanityFunction -e events/valid-event.json
